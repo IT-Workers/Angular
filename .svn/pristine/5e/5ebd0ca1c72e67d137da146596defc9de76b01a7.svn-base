@@ -1,0 +1,117 @@
+
+var STIM = (function (window) {
+	
+	'use strict';
+	
+	var webSocket;
+	
+	var MessageType = {
+		MSG_TXT   :'MSG_TXT', 
+		MSG_FACE  :'MSG_FACE',
+		MSG_IMG   :'MSG_IMG',
+		MSG_AUDIO :'MSG_AUDIO',
+		MSG_VIDEO :'MSG_VIDEO',
+		MSG_FILE  :'MSG_FILE'
+	};
+	
+	var Client = function(clientId, appSpace, options){
+		
+		var clientId = clientId;
+		var connectHanlder = options.connectHanlder;
+		var onMessageHanlder = options.onMessageHanlder;
+		var heart = options.heart == undefined ? 1 : options.heart;
+		var publickey = options.publickey;
+		var privateKey = options.privateKey;
+		
+		webSocket = createWebSocket();
+		
+		function onopen(event){
+			if(connectHanlder){
+				connectHanlder(event);
+			}
+		};
+		
+		function onerror(event){
+			if(connectHanlder){
+				connectHanlder(event);
+			}
+		};
+		
+		function onmessage(event){
+			var target = event.target;
+			if(onMessageHanlder){
+				connectHanlder(target);
+			}
+		};
+		
+		function createWebSocket(){
+			webSocket = new WebSocket('ws://127.0.0.1:8080/STIMWEB/chart/'+appSpace+'/'+clientId+'');
+			webSocket.onopen = onopen;
+			webSocket.onerror = onerror;
+			webSocket.onmessage = onmessage;
+			return webSocket;
+		};
+		
+		function keepLive(){
+			if(webSocket && webSocket.readyState == WebSocket.CLOSED){
+				webSocket = createWebSocket();
+			}
+		};
+		
+		setInterval(keepLive, heart * 3000);
+		
+		this.sendMessage = function(message, handler){
+			var binaryString = pako.gzip(JSON.stringify(message), { to: 'string' });
+			var encrypt = new JSEncrypt();
+		    encrypt.setKey(publickey);
+		    var encrypted = encrypt.encrypt(binaryString);
+			webSocket.send(encrypted);
+			if(webSocket.bufferedAmount > 0){
+				handler(message);
+			}
+		};
+		
+		this.getConversationByfriendId = function(id){
+			var key = clientId + "#" + id;
+			var conversation  = [];
+			var caseDate = localStorage.getItem(key);
+			if(caseDate){
+				var arr = caseDate.split(';');
+				for(var i in arr){
+					conversation.push(JSON.parse(arr[i]))
+				}
+			}
+			return conversation;
+		}
+	};
+	
+	var Message = function(from, to, type, body){
+		this.from = from;
+		this.to = to;
+		this.type = type;
+		this.body = body;
+		this.sendTime = nowDate();
+		
+		var conversation = localStorage.getItem(this.from  + "#" + this.to);
+		localStorage.setItem(this.from  + "#" + this.to, (conversation == null ? "" : conversation + ";") + JSON.stringify(this));
+	};
+	
+	function nowDate(){
+		var date;
+		try {
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', 'http://127.0.0.1:8080/STIMWEB', false);
+			xhr.send(null);
+			date = xhr.getResponseHeader("Date");
+		} catch (e) {
+			date = new Date();
+		}
+		return date.getTime();
+	};
+	
+	return {
+		Client: Client,
+		Message:Message,
+		MessageType:MessageType
+	};
+})(window);

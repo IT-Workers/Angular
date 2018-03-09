@@ -1,0 +1,83 @@
+
+var STIM = (function (window) {
+	
+	'use strict';
+	
+	var webSocket;
+	
+	/*var ConnectState = {
+		CONNECT_OFF        : 0,
+		CONNECT_OK         : 1,
+		CONNECT_CLOSE_ING  : 2,
+		CONNECT_CLOSE      : 3,
+	};*/
+	
+	var MessageType = {
+		MSG_TXT   :'MSG_TXT', 
+		MSG_FACE  :'MSG_FACE',
+		MSG_IMG   :'MSG_IMG',
+		MSG_AUDIO :'MSG_AUDIO',
+		MSG_VIDEO :'MSG_VIDEO',
+		MSG_FILE  :'MSG_FILE'
+	};
+	
+	var Client = function(clientId, appSpace, options){
+		
+		var connectHanlder = options.connectHanlder;
+		var receiveMessageHanlder = options.receiveMessageHanlder;
+		var heart = options.heart == undefined ? 1 : options.heart;
+		var publickey = options.publickey;
+		var privateKey = options.privateKey;
+		
+		webSocket = createWebSocket();
+		
+		function onopen(event){
+			var target = event.target;
+			if(connectHanlder){
+				connectHanlder(event);
+			}
+		};
+		
+		function onerror(event){
+			var target = event.target;
+			if(connectHanlder){
+				connectHanlder(event);
+			}
+			setTimeout(createWebSocket, heart * 1000);
+		};
+		
+		function onmessage(event){
+			console.log(event);
+		};
+		
+		function createWebSocket(){
+			webSocket = new WebSocket('ws://127.0.0.1:8080/STIMWEB/chart/'+appSpace+'/'+clientId+'');
+			webSocket.onopen = onopen;
+			webSocket.onerror = onerror;
+			webSocket.onmessage = onmessage;
+			return webSocket;
+		};
+		
+		this.sendMessage = function(message, handler){
+			var binaryString = pako.gzip(JSON.stringify(message), { to: 'string' });
+			console.log(JSON.stringify(message).length + "----" + binaryString.length);
+			var encrypt = new JSEncrypt();
+		    encrypt.setKey(publickey);
+		    var encrypted = encrypt.encrypt(binaryString);
+			webSocket.send(encrypted);
+		};
+	};
+	
+	var Message = function(form, to, type, body){
+		this.form = form;
+		this.to = to;
+		this.type = type;
+		this.body = body;
+	}
+	
+	return {
+		Client: Client,
+		Message:Message,
+		MessageType:MessageType
+	};
+})(window);

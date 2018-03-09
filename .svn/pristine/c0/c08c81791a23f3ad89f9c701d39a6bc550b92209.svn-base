@@ -1,0 +1,186 @@
+
+'use strict';
+var app = angular.module('app', ['ngSanitize']);
+
+app.filter('messageLength', function() {
+    return function(message) {
+        if(message.length > 10){
+        	message = message.substring(0, 10) + "...";
+        }
+        return message;
+    }
+});
+
+app.filter('messageCount', function() {
+    return function(count) {
+        if(count > 99){
+        	count = "99+";
+        }
+        return count;
+    }
+});
+
+app.directive('word', [function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+        	element[0].innerText = attrs.word;
+        }
+    };
+}]);
+
+app.controller('controller', function($scope, $http) {
+	
+	/**
+	 * STIM 所需的加密公钥和私钥, 不建议自己写在客户端，建议通后后台 获取。
+	 * demo 是为方便测试才写入客户端js中。
+	 */
+	
+	var publickey = "MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAsG6CABTC0N31ZwXbnwoREdKtLDKlLSLQ0x+1pBPtvAHIXgGuA+v6OklGAtkyv/"
+		+ "awq3UubOwC5n4E+sIS5xCDUyRXSXFAXlc4pEE5uOSjPiWJVIJ6oyM7wZIFqYieMysWgPBae3cW+pa6Eg59lLBstfEhpMSJAJmSC1/FwWb9L5v2XTjoteLcq2JSFiB1YZ+"
+		+ "dLRjQ2bAZUmVhwrnVmIQGSmMT39tyaMrsD0I1IGrhHrQLTx8qxHB9M1BXCScPVsMAmQAVbariUfcuk963ICBixYaaVHDSjgbd6e2kkwDz4djzGNZqgZ4Kmb88FQbA4BBIcF8rhLzfes"
+		+ "7G1UGzTU1U5tjnq3t1Jdyv3xEBB2Fg+1hddS1B7SQlPSI3N6WetpuXQRD/I7RwDTQJ03s7UHKwbIaYQ7NXZsTpXvLu0ONF8Osx8DgcsiPR6rukM09XEFkrcBtgT9Sr6JmOgPu8Unf4lfo" 
+		+"QeHqIAdnVii0adb//Sb6uk9cccFtLOBR4En0HBzpZAgMBAAE=";
+
+
+	var privateKey = "MIIG/gIBADANBgkqhkiG9w0BAQEFAASCBugwggbkAgEAAoIBgQCwboIAFMLQ3fVnBdufChER0"
+		+ "q0sMqUtItDTH7WkE+28AcheAa4D6/o6SUYC2TK/9rCrdS5s7ALmfgT6whLnEINTJFdJcUBeVzikQTm45KM+JYlUgnqjIzvBkgWp"
+		+ "iJ4zKxaA8Fp7dxb6lroSDn2UsGy18SGkxIkAmZILX8XBZv0vm/ZdOOi14tyrYlIWIHVhn50tGNDZsBlSZWHCudWYhAZKYxPf23JoyuwPQjUgauE"
+		+ "etAtPHyrEcH0zUFcJJw9WwwCZABVtquJR9y6T3rcgIGLFhppUcNKOBt3p7aSTAPPh2PMY1mqBngqZvzwVBsDgEEhwXyuEvN96zsbVQbNNTVTm2Oere3Ul3K/fEQEHYW"
+		+ "D7WF11LUHtJCU9Ijc3pZ62m5dBEP8jtHANNAnTeztQcrBshphDs1dmxOle8u7Q40Xw6zHwOByyI9Hqu6QzT1cQWStwG2BP1KvomY6A+7xSd/iV+hB4eogB2dWKLRp1v/9Jvq6T1xx"
+		+ "wW0s4FHgSfQcHOlkCAwEAAQKCAYEAhkzoemVTUqjSqASGhE6mZbnIBo/aujv5V+yYWPiui+GTgzOmIegcRwgF2h85iXSgUTPXDiStpISjB7p5pxgjz0MniolB5U5hmG7qIHsyZBkwq3rTHaGxWAz"
+		+ "ucHnFas/OxoGvbrJddI0NwLb1Ex0k825FHOZaH3HHAQ97OlhKPFZtN9MdGW9CaNdkAuHcWF6mx3BPcpWhAN6Zhx/snrdJDpDSzSF/upNVE9xjEnUpPjTxMt5XsMasF0Z9qkLoYzP12WBoDoCWZjhUY9R5rS"
+		+ "NEGq/u5rdCAYGG/ZqssEe4yp5xOAOd9GzhbutJWCBT1cJ9jteLT6/WT9KAkMqoIxkX5EGiMWHCZC8TfJVcc6n3gyfcsAqOi3xwQoRSDCbYpd9Ic9AsSaSEf6bVpMk5/Svm9XhhCHXMWlot1xbz5wAigYafHjrc8"
+		+ "fdD1rS/ND51kABl3i62cA0KUm4Kzh7vgmFfAEXe0FC3RRLGQpptgFx3F7PDlePF62PcTWaQYuzaTonxAoHBAOGW+QISRcfbHpju4tPMw9dew1dxMH6akByNwRy0eql1eSdMU56bI+yvvkS8+CQtBvIZ4BEE1pHQEp/"
+		+ "I4xC+ACzNLj/dErTwJlnLs3o9NdVA9qY2yglIVIzwRmG+OOC/lWeTlH2eZeJkez9Wyk8W8SSlojeJLvDsflp4Aa+oIP8jGMSIpY/YdkoZkVCJG3ChI7YiTIkOOGID7OJ+PkHhEqG70qC5xdhJ1mPzC+NG4fvLxHCuJ"
+		+ "w0vsU67KxVt5a62dQKBwQDINxtEIs+gIsV756L8SMbJo5SCnpH/4xEqp0CMrO6Jf1YshyjPq9LfzE1Wo+fKN/YjoCi9n5Z/bw2a3GMme4nXlKC8wS7dHG1MbcVBh7nL2wDlOj5S1vzXO7lMirY/vCDJmBmy4qLCcVBLF"
+		+ "Z9eA9uPIRaOmGlQDGZvAMDVh45ryjLv6aQyBYnVIFeiRutBblyUXupusaqYefx30y/XnSrH6CNXnpBIyGwI5WvDV2sG3JH1LyXyZPLKGRxVVOSkX9UCgcEAve3G/jh2KbrROv89WAb5B7XQDynMI3tsQ64RXWKSN2QhOb"
+		+ "XoXQvPJjIcpnDXFlYWl/SzEoEZSjB9zatriSf+q7mf68LsQgxCra10EUHBtib4wp40YbZVAUg2aYqnBoomdsro5Q5cR0xD++LNd+Mf6bPOLKXCMLNb+j05ZjPOfCCHdMh7Y+1iQibekois4pm4oFqmR2oCjHszkMmrDvo5"
+		+ "HpQs1Ic0DFK2PvZdFuAR2VYIsLnfRRnXVSr+Lg+VphAVAoHAaVIrwrT5OYjxD9PzNflmsO2fEvMtZEljX2eqGhZiSOw2Pag//LarcFT9ngUMyqCTl3wJ0m5f8dtOcddbRQQZp9EkmQaai3AHwvu/l1A5mZY0K2FvJY64ZNS"
+		+ "jDjOt2WsyaDnd0u9LpTOMhGL0ebVXyzwhrJNaWuSbAeuIhQsRDXzJPNFQMYweTIH993yNBtdyVg50DhTh4+HPwIzUjvy7Y3unE9FynwbnZeqhvJmA0JQ5J5xMvu0BlvSMpgrJV/qdAoHAPF9Vne18CCCxwtpgB6G6T+xE/b4"
+		+ "ZvaD0XJxIOYkK6ukguDYLeXjYzmBI/fF0q1zpcf1hMRCTBFGM0p3EpFwZJDmEb+tQMmwEtBWHm0p3Ws8zXWOSl3/yAYuHik57OUu8ZhneIS1U/ImjEUCJ+rb9omE/tjSmmEAMtVlSgIx8YBe0obCMHXv97MqXVsgOAFcAtAR"
+		+ "u3mV1V795zkw71aU6Lq88I+2vW+yptCpgOQe/I0v3M3dkbrteBcUl4IqgXFVm";
+	
+	/**
+	 * 用户信息
+	 */
+	$scope.user = {
+		name:'DEMO',
+		clientId:'456789',
+		icon:'resource/img/friend-456789.jpg'
+	};
+	
+	/**
+	 * 初始化客户端
+	 * publickey  ：公钥
+	 * privateKey ：私钥
+	 * appSpace   : 应用空间名
+	 * userName   ：用户名
+	 * password   ：密码
+	 * callback   ：回调函数  参数：result ：eq：{status：[状态 0 初始化成功，-1 初始化失败],message:[描述信息], event：[websocket连接信息]}
+	 */
+	var iMClient  = new STIM.Client({
+		publickey:publickey,
+		privateKey:privateKey,
+		appSpace:'STIM_TEST',
+		userName:'456789',
+		password:'123456',
+		callback:function(result){
+			console.log(result);
+		}
+	});
+	
+	/**
+	 * 获取所有好友【本地】历史会话
+	 */
+	$scope.friendConversation = iMClient.getFriendConversation();
+	
+	/**
+	 * 好友列表，好友列表需要通过自己的服务器去获取，之所以消息服务部存错好友列表，是因为每个人的系统服务存储的好友信息都不一样。
+	 * 以下为测试的好友列表，仅供demo使用
+	 */
+	 $scope.friends = [{
+		 name:'测试好友',
+		 clientId:'123456',
+		 icon:'resource/img/user.jpg'
+	 }];
+	 
+	 //保存当前选择的好友ID，当刷新浏览器 从新获取上次 会话的好友
+     $scope.friendId = localStorage.getItem($scope.user.clientId + "_initFriend");
+     
+     
+     $scope.conversation = iMClient.getConversationByFriendId($scope.friendId);
+	 
+	 // demo 代码
+	 $scope.getFriend = function(friendId){
+		
+		for (var i in $scope.friends) {
+			var friend = $scope.friends[i];
+			if (friendId == friend.clientId) {
+				return friend;
+			}
+		}
+	 };
+	
+	$scope.search = function(name){
+		$scope.searcgName = name;
+	}
+	
+	$scope.$watch('conversation',function(newValue,oldValue){
+		var element = document.getElementById('content');
+		element.scrollTop = element.scrollHeight;
+    });
+	
+    //发送消息
+    $scope.sendMessage = function(friendId){
+    	
+    	if(!friendId){
+    		friendId = localStorage.getItem($scope.user.clientId + "_initFriend");
+    	}
+    	
+    	var value =  $scope.messageModel;
+    	
+    	if(value.length > 0){
+    		var message =  new STIM.Message($scope.user.clientId, friendId, STIM.MessageType.MSG_TXT, value);
+    		iMClient.sendMessage(message, function(message){
+    			
+    			$scope.conversation.push(message);
+    			$scope.messageModel = '';
+    			
+    			$scope.$watch('conversation',function(newValue,oldValue){
+    				var element = document.getElementById('content');
+    				element.scrollTop = element.scrollHeight;
+    				$scope.friendConversation = iMClient.getFriendConversation();
+    		    });
+    		});
+    	}
+    };
+    
+    $scope.editMessage = function(event, friendId){
+    	if (event.ctrlKey && event.which === 13) {
+    		$scope.sendMessage(friendId);
+		}
+    };
+    
+    $scope.type = 1;
+   
+    
+    $scope.selected = function(type){
+    	$scope.type = type;
+    };
+    
+    $scope.seleectdFriend = function(friendId){
+    	$scope.friendId = friendId;
+    	localStorage.setItem($scope.user.clientId + "_initFriend", friendId);
+    	$scope.conversation = iMClient.getConversationByFriendId(friendId);
+    }
+});
+
+
+
+
+
+
+
+
+

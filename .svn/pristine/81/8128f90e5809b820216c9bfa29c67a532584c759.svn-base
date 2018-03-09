@@ -1,0 +1,100 @@
+<html lang="zh" >
+<head>
+  <meta name="viewport" charset="UTF-8" content="width=device-width, initial-scale=1">
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="resources/css/angular_material/angular-material.min.css">
+  
+  <link rel="stylesheet" href="index/css/index.css">
+  
+</head>
+<body ng-app="app" ng-cloak>
+	
+	<!-- 头部导航 -->
+	<header class="header">
+		<div layout="row">
+			<div flex-offset="10" flex="80" class="header-content">
+				<div layout="row" layout-margin layout-fill>
+					<div flex="30"><img src="index/img/logo.jpg" style="height: 84px"></div>
+					<div flex="70">
+    					<ul>
+    						<li md-border-bottom><md-button class="md-primary" ng-href="{{googleUrl}}" style="padding:4px">默认菜单</md-button></li>
+    						<li md-border-bottom><md-button class="md-primary" ng-href="{{googleUrl}}" target="_blank" style="padding:4px">默认菜单</md-button></li>
+    						<li md-border-bottom><md-button class="md-primary" ng-href="{{googleUrl}}" target="_blank" style="padding:4px">默认菜单</md-button></li>
+    						<li md-border-bottom><md-button class="md-primary" ng-href="{{googleUrl}}" target="_blank" style="padding:4px">默认菜单</md-button></li>
+    						<li md-border-bottom><md-button class="md-primary" ng-href="{{googleUrl}}" target="_blank" style="padding:4px">默认菜单</md-button></li>
+    					</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+	
+	<section ui-view='main'></section>
+	
+	<!-- 页脚 -->
+	<footer>
+		<section  class="footer">
+			<div flex-offset="10" flex="80">
+				<div layout="row" layout-fill style="padding: 30px">
+					<div flex="60" class="footer-left">
+					<div layout="row" layout-fill>
+						<div flex="50">
+							<ul class="footer-li-nav">
+								<li>关于我们</li>
+								<li>关于我们</li>
+								<li>关于我们</li>
+								<li>关于我们</li>
+								<li>关于我们</li>
+								<li>关于我们</li>
+								<li>关于我们</li>
+							</ul>
+						</div>
+						<div flex="50">
+							<ul class="footer-li-nav">
+								<li>关于我们</li>
+								<li>关于我们</li>
+								<li>关于我们</li>
+								<li>关于我们</li>
+								<li>关于我们</li>
+								<li>关于我们</li>
+								<li>关于我们</li>
+							</ul>
+						</div>
+					</div>
+					</div>
+					<div flex="40" class="footer-right">
+						<ul class="footer-li-nav">
+							<li>关于我们</li>
+							<li>关于我们</li>
+							<li>关于我们</li>
+							<li>关于我们</li>
+							<li>关于我们</li>
+							<li>关于我们</li>
+							<li>关于我们</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section style="height: 50px; background: #222; text-align: center;">
+			　<span style="color: #666; font-size: 14px;line-height: 50px">Copyright©2017XXXX信息科技有限公司All Rights Reserved鄂ICP备1000000号</span>
+		</section>
+	</footer>
+
+
+  <!-- Angular Material requires Angular.js Libraries -->
+  <script src="resources/js/angularjs/angular.min.js"></script>
+  <script src="resources/js/angularjs/angular-animate.min.js"></script>
+  <script src="resources/js/angularjs/angular-aria.min.js"></script>
+  <script src="resources/js/angularjs/angular-messages.min.js"></script>
+  <script src="resources/js/angularjs/angular-ui-router.min.js"></script>
+  <!-- Angular Material Library -->
+  <script src="resources/js/angular_material/angular-material.min.js"></script>
+  
+  <script src="resources/js/ocLazyLoad/ocLazyLoad.min.js"></script>
+  
+  <!-- Your application bootstrap  -->
+  <script src="app.js"></script>
+</body>
+</html>
+

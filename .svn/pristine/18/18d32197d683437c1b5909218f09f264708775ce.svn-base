@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<script type="text/javascript">
+
+if(!localStorage.getItem("A")){
+	
+	localStorage.setItem("A", 0);
+
+	localStorage.setItem("B", 1);
+
+	localStorage.setItem("C", 2);
+
+	localStorage.setItem("D", 3);
+}
+
+
+function ttt(i_key){
+	
+	var index = localStorage.getItem(i_key);
+	
+	console.log(index + "----dfdsfsfsddf"); 
+	
+	for(var key in localStorage){
+		var record = parseInt(localStorage.getItem(key));
+		console.log(key, record); 
+		if(index == null || parseInt(index) > record){
+			localStorage.setItem(key, record + 1);
+		}
+	}
+	
+	localStorage.setItem(i_key, 0);
+	
+}
+ttt("A");
+console.log(localStorage);
+
+ttt("B");
+console.log(localStorage); 
+
+ttt("C");
+console.log(localStorage);
+ 
+ttt("D");
+console.log(localStorage); 
+
+ttt("F");
+console.log(localStorage); 
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+.header{
+	height: 100px; background:#FFFFFF; border-bottom: 1px solid #D5D5D5;
+}
+.header-content{
+	 height: 100px; 
+}
+.header-content ul{
+	float: right;list-style: none;height:86px; margin:0px; padding:0px;
+}
+.header-content ul li{
+	float: right;line-height: 86px;
+}
+
+
+
+.footer{
+	height: 250px;background: #333; border: 1px solid #444;
+}
+
+.footer-left{
+	border-right: 1px solid #444;
+}
+.footer-right{
+	border-left: 1px solid #222
+}
+
+.footer-li-nav{
+	list-style: none;
+}
+
+.footer-li-nav li{
+	color:#999;padding: 4px; font-size: 13px;
+}
+.footer-li-nav > :FIRST-CHILD{
+	color:#FFF;padding: 4px; font-size: 15px;
+}

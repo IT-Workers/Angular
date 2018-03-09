@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="Access-Control-Allow-Origin" content="*"> 
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style type="text/css">
+		form {border: 1px #D5D5D5 solid; width: 270px; margin: auto;}
+		label {display: block;margin: 16px;}
+		label input {padding: 2px}
+		footer {padding: 16px 88px}
+	</style>
+</head>
+<body style="padding-top: 300px">
+	<form id="from" action="register.html">
+		<label>
+			<span>用户名:</span>
+			<input id="userName" type="text" placeholder="用户名">
+		</label>
+		<label>
+			<span>空间名:</span>
+			<input id="appSpace" type="text" placeholder="空间名">
+		</label>
+		<label>
+			<span>密&emsp;码:</span>
+			<input id="password" type="password" placeholder="密码">
+		</label>
+		<footer>
+			<span>
+				<button id="login" >登录</button>
+			</span>
+			<span>
+				<button id="register">注册</button>
+			</span>
+		</footer>
+		
+	</form>
+</body>
+<script type="text/javascript">
+
+	httpUtil = function(options){
+		var xmlHttp = new XMLHttpRequest;
+		xmlHttp.onreadystatechange = function() {
+			switch(xmlHttp.readyState) {
+		        case 0 :
+		      	  	console.log("0    请求未初始化");
+		            break; 
+		        case 1 :
+		      	  	console.log("1     请求启动，尚未发送");
+		            break;
+		        case 2 :
+		      	  	console.log("2     请求发送，尚未得到响应");
+		            break;
+		        case 3 : 
+		      	  	console.log("3      请求开始响应，收到部分数据");
+		            break;
+		        case 4 :
+		      	  	console.log("请求响应完成得到全部数据");
+		      	  	options.success(xmlHttp);
+	            	break;
+	      	}
+  		};
+  		xmlHttp.open(options.method, options.url, options.async);
+  		xmlHttp.setRequestHeader("Content-type", options.contentType);
+		xmlHttp.send(options.data);
+	};
+
+	document.getElementById("login").onclick = function (event){
+		event.preventDefault();
+		var userName = document.getElementById("userName").value;
+		var appSpace = document.getElementById("appSpace").value;
+		var password = document.getElementById("password").value;
+		httpUtil({
+			method:"POST",
+			url:"/IMServer/user/login",
+			async:true,
+			contentType:"application/x-www-form-urlencoded",
+			data:"userName="+userName+"&appSpace="+appSpace+"&password="+password+"",
+			success:function(response){
+				var result = JSON.parse(response.responseText);
+				if(result.success){
+					//保存用户信息
+					localStorage.setItem("User", JSON.stringify(result.data));
+					var formNode = document.getElementById("from");
+					formNode.action = "index.html";
+					formNode.submit()
+				}else{
+					alert(result.message);
+				}
+				
+			}
+		});
+	};
+
+</script>
+</html>

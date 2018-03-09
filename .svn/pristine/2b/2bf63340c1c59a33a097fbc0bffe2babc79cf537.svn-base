@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://cdn.bootcss.com/pako/1.0.5/pako.min.js"></script>
+<script type="text/javascript">
+
+var t = '';
+
+for(var i=0; i< 100; i++){
+	t += "您喜爱在哪阿萨德子大基础色的知识点开发多少困难肯定是电脑上扣扣阿萨德撒大多撒多asdaddasdsadasd";
+}
+
+var ss = {form: "18827442990", to: "18827442999", type: "MSG_TXT", body: t}
+
+var str = JSON.stringify(ss)
+
+console.log(str.length);
+
+var binaryString = pako.gzip(str, { to: 'string' });//字符串压缩处理
+
+console.log(binaryString +"-----" + binaryString.length);
+
+
+binaryString = window.btoa(binaryString);
+
+console.log(binaryString +"-----" + binaryString.length);
+
+binaryString = window.atob(binaryString);
+
+var restored = pako.ungzip(binaryString, { to: 'string' });//字符串解压缩处理
+
+console.log(restored);
+
+console.log(pako);
+
+
+
+
+
+</script>
+</head>
+<body>
+
+</body>
+</html>

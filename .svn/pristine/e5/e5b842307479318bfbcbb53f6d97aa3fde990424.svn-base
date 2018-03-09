@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<script src="resource/js/pako.min.js" type="text/javascript"></script>
+<script src="resource/js/jsencrypt.min.js" type="text/javascript"></script>
+<script src="resource/js/stim.js" type="text/javascript"></script>
+<script type="text/javascript">
+	var options = {
+		//heart:1,
+		connectHanlder:function(event){
+			console.log(event);
+		}
+	};
+	var iMClient  = new STIM.Client('18827442990', 'STIM', options);
+	
+	
+	//iMClient.sendMessage("fsdfsfsdfsf", options);
+	
+	//console.log(iMClient);
+	
+	//var message
+	
+</script>
+</body>
+</html>

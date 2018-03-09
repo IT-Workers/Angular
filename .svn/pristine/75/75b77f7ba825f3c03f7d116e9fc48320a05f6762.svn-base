@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="resource/css/theme.css">
+	<link rel="stylesheet" href="resource/css/stim.css">
+</head>
+<body>
+
+	<div class="main-panel" style="margin-top: 100px">
+		<div class="left-panel">
+			<header>
+				<section class="left-panel-hear">
+					<img alt="缥缈" src="resource/img/user.jpg">
+					<b>缥缈</b>
+				</section>
+				<section class="left-panel-search">
+					<div>
+						<img alt="搜索" src="resource/img/search.png">
+						<input placeholder="请输入搜索内容" type="text">
+					</div>
+				</section>
+				<nav class="left-panel-nav">
+					<ul>
+						<li>
+							<img alt="会话" src="resource/img/conversation.png">
+						</li>
+						<li>
+							<img alt="好友" src="resource/img/friend.png">
+						</li>
+					</ul>
+				</nav>
+			</header>
+			<section class="conver-list">
+				<ul>
+					<li>
+						<img alt="小智" src="resource/img/user.jpg">
+						<div class="conver-list-content">
+							<div>
+								<b>小智</b>
+								<time>12:30</time>
+							</div>
+							<div>
+								<span>你哈阿所产生的csc德撒多</span>
+								<i>99+</i>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</section>
+		</div>
+		<div class="righet-panel">
+			<header>
+				<img alt="缥缈" src="resource/img/user.jpg">
+				<b>缥缈</b>
+			</header>
+			<div class="righet-panel-content">
+				<ul>
+					<li class="righet-panel-content-send">
+						<img alt="小智" src="resource/img/user.jpg">
+						<div>
+							<span>你在干嘛？</span>
+						</div>
+					</li>
+					<li class="righet-panel-content-send">
+						<img alt="小智" src="resource/img/user.jpg">
+						<div>
+							<span>你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？</span>
+						</div>
+					</li>
+					<li class="righet-panel-content-receive">
+						<img alt="小智" src="resource/img/user.jpg">
+						<div>
+							<span>你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？</span>
+						</div>
+					</li>
+					<li class="righet-panel-content-receive">
+						<img alt="小智" src="resource/img/user.jpg">
+						<div>
+							<span>你在干嘛？</span>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<footer class="righet-panel-footer">
+				<header>
+					<ul>
+						<li>
+							<img alt="表情" src="resource/img/msg-smile.png">
+						</li>
+						<li>
+							<img alt="图片" src="resource/img/msg-file.png">
+						</li>
+					</ul>
+				</header>
+				<div>
+					<textarea  style="border: none; outline: none; height: 60px">
+					</textarea>
+				</div>
+				<footer>
+					<div>
+						<span>按下Ctrl+Enter换行</span>
+						<button>发送</button>
+					</div>
+				</footer>
+			</footer>
+		</div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+
+	<script src="resource/js/stim.js"></script>
+	<script src="resource/js/angular-1.6.4/angular.min.js"></script>
+	<!-- Your application bootstrap  -->
+	<!-- <script src="app.js"></script> -->
+</body>
+</html>

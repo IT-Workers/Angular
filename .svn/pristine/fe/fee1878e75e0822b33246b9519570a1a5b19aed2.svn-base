@@ -1,0 +1,10 @@
+
+'use strict';
+
+var angular_material = angular.module('app', ['ngMaterial']);
+
+angular_material.controller("HeaderNavController", function($scope) {
+	
+	$scope.name = 'Hello Wolrd !';
+	
+});

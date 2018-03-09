@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data-sources>
+	<data-source id="mysql5-15cedb3f574-304718ead6e64607" provider="mysql" driver="mysql5" name="MySQL - 192.168.0.122" save-password="true" show-system-objects="true" read-only="false">
+		<connection host="192.168.0.122" port="3306" server="" database="" url="jdbc:mysql://192.168.0.122:3306/" user="curefun" password="EBEUJUdWSnbk" type="dev">
+			<network-handler type="CONFIG" id="mysql_ssl" enabled="false" save-password="false">
+				<property name="ssl.public.key.retrieve" value="false"/>
+				<property name="ssl.verify.server" value="true"/>
+				<property name="ssl.require" value="false"/>
+			</network-handler>
+			<network-handler type="TUNNEL" id="ssh_tunnel" enabled="false" save-password="false">
+				<property name="sshConnectTimeout" value="10000"/>
+				<property name="port" value="22"/>
+				<property name="authType" value="PASSWORD"/>
+			</network-handler>
+			<network-handler type="PROXY" id="socks_proxy" enabled="false" save-password="false">
+				<property name="socks-port" value="1080"/>
+			</network-handler>
+		</connection>
+		<virtual-meta-data>
+			<container name="model">
+				<container name="casemanager">
+					<entity name="diag_sub_type_info">
+						<constraint name="PRIMARY" type="VIRTUAL KEY">
+							<attribute name="diag_sub_type_id"/>
+						</constraint>
+					</entity>
+				</container>
+			</container>
+		</virtual-meta-data>
+	</data-source>
+	<data-source id="mysql5-15d1166b64a-2d1673779e8978cf" provider="mysql" driver="mysql5" name="MySQL - 192.168.0.119" save-password="true" show-system-objects="true" read-only="false">
+		<connection host="192.168.0.119" port="3306" server="" database="" url="jdbc:mysql://192.168.0.119:3306/" user="root" password="QlZVdBQVJPc=" type="dev">
+			<network-handler type="PROXY" id="socks_proxy" enabled="false" save-password="false">
+				<property name="socks-port" value="1080"/>
+			</network-handler>
+			<network-handler type="CONFIG" id="mysql_ssl" enabled="false" save-password="false">
+				<property name="ssl.public.key.retrieve" value="false"/>
+				<property name="ssl.verify.server" value="true"/>
+				<property name="ssl.require" value="false"/>
+			</network-handler>
+			<network-handler type="TUNNEL" id="ssh_tunnel" enabled="false" save-password="false">
+				<property name="sshConnectTimeout" value="10000"/>
+				<property name="port" value="22"/>
+				<property name="authType" value="PASSWORD"/>
+			</network-handler>
+		</connection>
+		<virtual-meta-data>
+			<container name="model">
+				<container name="stim">
+					<entity name="UserModel">
+						<constraint name="PRIMARY" type="VIRTUAL KEY">
+							<attribute name="id"/>
+							<attribute name="userName"/>
+							<attribute name="password"/>
+							<attribute name="userIcon"/>
+							<attribute name="imClientId"/>
+						</constraint>
+					</entity>
+					<entity name="UserFriend">
+						<constraint name="PRIMARY" type="VIRTUAL KEY">
+							<attribute name="userId"/>
+							<attribute name="friendId"/>
+						</constraint>
+					</entity>
+				</container>
+			</container>
+		</virtual-meta-data>
+	</data-source>
+	<data-source id="mysql5-15debe9322d-428e22c53f91c9" provider="mysql" driver="mysql5" name="MySQL - 47.94.97.28" save-password="true" show-system-objects="true" read-only="false">
+		<connection host="47.94.97.28" port="3306" server="" database="" url="jdbc:mysql://47.94.97.28:3306/" user="root" password="QlZVdABjB1Jl8w==" type="dev">
+			<network-handler type="PROXY" id="socks_proxy" enabled="false" save-password="false">
+				<property name="socks-port" value="1080"/>
+			</network-handler>
+			<network-handler type="CONFIG" id="mysql_ssl" enabled="false" save-password="false">
+				<property name="ssl.public.key.retrieve" value="false"/>
+				<property name="ssl.verify.server" value="true"/>
+				<property name="ssl.require" value="false"/>
+			</network-handler>
+			<network-handler type="TUNNEL" id="ssh_tunnel" enabled="false" save-password="false">
+				<property name="sshConnectTimeout" value="10000"/>
+				<property name="port" value="22"/>
+				<property name="authType" value="PASSWORD"/>
+			</network-handler>
+		</connection>
+	</data-source>
+	<data-source id="mysql5-15e07b3be6a-36b3a58152205bf9" provider="mysql" driver="mysql5" name="MySQL - 192.168.0.112" save-password="true" show-system-objects="true" read-only="false">
+		<connection host="192.168.0.112" port="3306" server="" database="" url="jdbc:mysql://192.168.0.112:3306/" user="curefun" password="EBEUJUdWSnbk" type="dev">
+			<network-handler type="TUNNEL" id="ssh_tunnel" enabled="false" save-password="false">
+				<property name="sshConnectTimeout" value="10000"/>
+				<property name="port" value="22"/>
+				<property name="authType" value="PASSWORD"/>
+			</network-handler>
+			<network-handler type="CONFIG" id="mysql_ssl" enabled="false" save-password="false">
+				<property name="ssl.public.key.retrieve" value="false"/>
+				<property name="ssl.verify.server" value="true"/>
+				<property name="ssl.require" value="false"/>
+			</network-handler>
+			<network-handler type="PROXY" id="socks_proxy" enabled="false" save-password="false">
+				<property name="socks-port" value="1080"/>
+			</network-handler>
+		</connection>
+	</data-source>
+	<data-source id="mysql5-15e278789e1-4adafb72aaf37965" provider="mysql" driver="mysql5" name="MySQL - 59.173.19.27" save-password="true" show-system-objects="true" read-only="false">
+		<connection host="59.173.19.27" port="3306" server="" database="" url="jdbc:mysql://59.173.19.27:3306/" user="curefun" password="EBEUJUdWSnbk" type="dev">
+			<network-handler type="PROXY" id="socks_proxy" enabled="false" save-password="false">
+				<property name="socks-port" value="1080"/>
+			</network-handler>
+			<network-handler type="TUNNEL" id="ssh_tunnel" enabled="false" save-password="false">
+				<property name="sshConnectTimeout" value="10000"/>
+				<property name="port" value="22"/>
+				<property name="authType" value="PASSWORD"/>
+			</network-handler>
+			<network-handler type="CONFIG" id="mysql_ssl" enabled="false" save-password="false">
+				<property name="ssl.public.key.retrieve" value="false"/>
+				<property name="ssl.verify.server" value="true"/>
+				<property name="ssl.require" value="false"/>
+			</network-handler>
+		</connection>
+	</data-source>
+</data-sources>

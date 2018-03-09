@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <script src="resource/js/jsencrypt.min.js"></script>
+    <script type="text/javascript">
+
+    
+    var pubkey = 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAId0FyZa/QV73IgHMziCCxrcuHW9WD9EFEaKg4tGq5RWQSXRBskCbCInUX5/ovV8FJo2u50QKz4nchOQsbodhdcCAwEAAQ==';
+    
+    var privkey = 'MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAh3QXJlr9BXvciAczOIILGty4db1YP0QURoqDi0arlFZBJdEGyQJsIidRfn+i9XwUmja7nRArPidyE5Cxuh2F1wIDAQABAkBKnUtnSHXagHlhwT2Y4iHF4VIHIY8sAo98sC54GSzI38lqmM031nUxTj6gReHb152OGslsfY34xTMHOPH/1WlBAiEA9n6FdTxPxD+9mxFcx1psmFaZQus7GqgC5cqEvWnJ3zcCIQCMrVXaJRrGojS6PqvAuZBEI538QYsD2S6RvhoB8ASeYQIgXm9Sifu1Q6Z36bTZKrcF68chqHWeizPbCFZyTG7/HDkCICCiOS9AukRn7nlh/m/X3CqiZIzXG4uJ/y6Z/eiDKF8hAiEA4bdDvWe6OYc61TkF9dooFRqcOXFn4qcH9oYMLuHe5+g=';
+    
+    var encrypt = new JSEncrypt();
+    encrypt.setKey(pubkey);
+    var encrypted = encrypt.encrypt('rrrr');
+
+    // Decrypt with the private key...
+    
+    console.log(encrypted.length);
+    
+    var decrypt = new JSEncrypt();
+    decrypt.setPrivateKey(privkey);
+    var uncrypted = decrypt.decrypt(encrypted);
+    
+    
+    console.log(decrypt);
+    console.log(uncrypted);
+    
+    
+    
+    
+    
+   /* var encrypt1 = new JSEncrypt();
+    encrypt1.setKey(privkey);
+    var encrypted1 = encrypt1.encrypt('4444444444444444');
+    
+    
+    var decrypt1 = new JSEncrypt();
+    decrypt1.setKey(pubkey);
+    var uncrypted1 = decrypt1.decrypt(encrypted);
+    
+    
+    //console.log(privkey);
+    console.log(uncrypted1); */
+    
+    
+
+    </script>
+</head>
+<body>
+</body>
+</html>

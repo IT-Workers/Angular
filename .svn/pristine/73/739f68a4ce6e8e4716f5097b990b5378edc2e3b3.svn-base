@@ -1,0 +1,189 @@
+
+var STIM = (function (window) {
+	
+	'use strict';
+	
+	var webSocket;
+	
+	var MessageType = {
+		MSG_CLIENT :'MSG_CLIENT',
+		MSG_TXT    :'MSG_TXT', 
+		MSG_FACE   :'MSG_FACE',
+		MSG_IMG    :'MSG_IMG',
+		MSG_AUDIO  :'MSG_AUDIO',
+		MSG_VIDEO  :'MSG_VIDEO',
+		MSG_FILE   :'MSG_FILE'
+	};
+	
+	var Client = function(options){
+		var clientId = options.userName;
+		var appSpace = options.appSpace
+		var publickey = options.publickey;
+		var privateKey = options.privateKey;
+		var callback = options.callback;
+		
+		
+		
+		webSocket = createWebSocket();
+		
+		function onopen(event){
+		};
+		
+		function onerror(event){
+			callback({status:-1, message:'connection failure!',event:event});
+		};
+		
+		function onmessage(event){
+			var data = event.data;
+			var message;
+			try {
+				close();
+				message = JSON.parse(data);
+				callback({status:-1, message:message.body,event:event});
+			} catch (e) {
+				message = decrypt(data);
+			}
+		};
+		
+		function createWebSocket(){
+			webSocket = new WebSocket('ws://127.0.0.1:8080/STIMWEB/chart/' +appSpace + '/' + clientId + '?token=' + encrypt(options.password) + '');
+			webSocket.onopen = onopen;
+			webSocket.onerror = onerror;
+			webSocket.onmessage = onmessage;
+			return webSocket;
+		};
+		
+		function keepLive(){
+			if(webSocket && webSocket.readyState == WebSocket.CLOSED){
+				webSocket = createWebSocket();
+			}
+		};
+		
+		var interval = setInterval(keepLive, 5000);
+		
+		function close(){
+			if(webSocket) webSocket.close();
+			clearInterval(interval);
+		};
+		
+		function saveMessage(message){
+			var from = message.from;
+			var i_key = clientId + "#" + (from == clientId ? message.to : from);
+			var index = localStorage.getItem(i_key);
+			for(var key in localStorage){
+				var arr = key.split("#");
+				if(arr && arr.length == 2){
+					var record = parseInt(localStorage.getItem(key));
+					if(index == null || parseInt(index) > record){
+						localStorage.setItem(key, record + 1);
+					}
+				}
+			}
+			localStorage.setItem(i_key, 0);
+			var c_key = clientId + "@" + (from == clientId ? message.to : from);
+			var conversation = localStorage.getItem(c_key);
+			localStorage.setItem(c_key, (conversation == null ? "" : conversation + ";") + JSON.stringify(message));
+			//localStorage.setItem(c_key, (conversation == null ? "" : conversation + ";") + encrypt(message));
+		};
+		
+		function getConversationByFriendId(id){
+			var key = clientId + "@" + id;
+			var conversation  = [];
+			var caseData = localStorage.getItem(key);
+			if(caseData){
+				var arr = caseData.split(';');
+				var part = '';
+				for(var i in arr){
+					var item = arr[i];
+					try {
+						var data = JSON.parse(item);
+						conversation.push(data);
+						part = '';
+					} catch (e) {
+						part += item;
+						try {
+							var data = JSON.parse(part);
+							conversation.push(data);
+							part = '';
+						} catch (e) {
+							part += ";";
+						}
+					}
+				}
+			}
+			return conversation;
+		};
+		
+		function encrypt(value){
+			var binaryString = pako.gzip((typeof value) == 'string' ? value : JSON.stringify(value), { to: 'string' });
+			var encrypt = new JSEncrypt();
+		    encrypt.setKey(publickey);
+		    return encrypt.encrypt(binaryString);
+		};
+		
+		function decrypt(value){
+			var decrypt = new JSEncrypt();
+			decrypt.setKey(privateKey);
+			return JSON.parse(pako.ungzip(decrypt.decrypt(value), { to: 'string' }));
+		};
+		
+		this.sendMessage = function(message, handler){
+			if(webSocket && webSocket.readyState == WebSocket.OPEN){
+				webSocket.send(encrypt(message));
+				if(webSocket.bufferedAmount > 0){
+					handler(message);
+				}
+				saveMessage(message);
+			}
+		};
+		
+		this.getFriendConversation = function(){
+			var conversation  = [];
+			for(var key in localStorage){
+				var record = localStorage.getItem(key);
+				var arr = key.split("@");
+				if(arr && arr.length == 2){
+					var friendId = arr[1];
+					var index = parseInt(localStorage.getItem(clientId + "#" + friendId));
+					conversation[index] = {
+						friendId:friendId,
+						conversation:getConversationByFriendId(friendId)
+					};
+				}
+			}
+			return conversation;
+		};
+		
+		this.getConversationByFriendId = function(id){
+			return getConversationByFriendId(id);
+		};
+	};
+	
+	var Message = function(from, to, type, body){
+		this.from = from;
+		this.to = to;
+		this.type = type;
+		this.body = body;
+		this.sendTime = nowDate();
+	};
+	
+	function nowDate(){
+		var date;
+		try {
+			var xhr = new XMLHttpRequest();
+			xhr.timeout = 5000;
+			xhr.open('GET', 'http://127.0.0.1/STIMWEB', false);
+			xhr.send(null);
+			date = new Date(xhr.getResponseHeader("Date"));
+		} catch (e) {
+			date = new Date();
+		}
+		return date.getTime();
+	};
+	
+	return {
+		Client: Client,
+		Message:Message,
+		MessageType:MessageType
+	};
+})(window);

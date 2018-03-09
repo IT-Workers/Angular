@@ -1,0 +1,26 @@
+
+'use strict';
+/**
+ * 初始化
+ */
+var angular_material = angular.module('app', ['ngRoute','ngMaterial']);
+
+/**
+ * 路由设置
+ */
+angular_material.config(['$routeProvider',function($routeProvider){
+	$routeProvider.when('/', {
+		templateUrl: 'index/views/index_content.html',
+		controller: "dd"
+	});
+}]);
+
+angular_material.controller('HeaderNavController', function($scope) {
+	
+	$scope.name = 'Hello Wolrd !';
+	
+});
+
+angular_material.controller('dd', function($scope) {
+	$scope.name = 'Hello Wolrd !';
+});

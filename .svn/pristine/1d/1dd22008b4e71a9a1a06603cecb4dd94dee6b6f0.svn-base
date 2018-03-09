@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<script type="text/javascript" src="resource/js/cryptico.min.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+	
+	 var pubkey = 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ9aYbgsEJfHKIUZk2VmcCor56gfpO4tdoBb5dvbYyp2W/91SxSXhaDkfsFv+OjgnKj1m57qoUyO9b3Sq95e3TUCAwEAAQ==';
+	 
+	 var privkey = 'MIIBUwIBADANBgkqhkiG9w0BAQEFAASCAT0wggE5AgEAAkEAn1phuCwQl8cohRmTZWZwKivnqB+k7i12gFvl29tjKnZb/3VLFJeFoOR+wW/46OCcqPWbnuqhTI71vdKr3l7dNQIDAQABAkBytVTyhoXLPAnnBeocbAkB0mkHlP/ck81hyMVF5j8UKMv9N2i4/SljjlupFM9L1CB1lGwrK21eB0cEndA4otgBAiEA1egXB8Z62VCvHOuMymR6fuu+0a7mELKcf1thrhY0unUCIQC+thBOapoIpYOoeD7SewDbOQqsPvx8wRRW+gJwOV2/wQIgf3mgv/F4pKmAsitt6++VUK4NOciRMsI+oWdD/wscwUECIHe6ZVJVqo5zGszRcN9DSa5XiVPJ10mbDeHs40sBONIBAiB7yQKWVG3TVagsE3ko+ujhbS/yxD9fOxx2iThodn6+lg==';
+	
+	var PlainText = "Matt, I need you to help me with my Starcraft strategy.";
+
+	var EncryptionResult = cryptico.encrypt(PlainText, pubkey);
+	
+	console.log(EncryptionResult);
+	
+	
+	
+	//var DecryptionResult = cryptico.decrypt(EncryptionResult.cipher, privkey);
+	
+	
+	console.log(cryptico);
+	
+		
+	</script>
+</body>
+</html>

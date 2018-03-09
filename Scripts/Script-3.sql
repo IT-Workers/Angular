@@ -1,0 +1,1 @@
+select * from patient_diag_dispose where patient_id="20170829010002012";

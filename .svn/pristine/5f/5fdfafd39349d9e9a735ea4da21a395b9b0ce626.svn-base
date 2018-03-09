@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://cdn.bootcss.com/pako/1.0.5/pako.min.js"></script>
+<script type="text/javascript">
+
+var str = '';
+
+for(var i=0; i< 10000; i++){
+	str += "您";
+}
+
+
+
+var binaryString = pako.gzip(str, { to: 'string' });//字符串压缩处理
+
+
+console.log(binaryString +"-----" + binaryString.length);
+
+
+binaryString = window.btoa(binaryString);
+
+console.log(binaryString +"-----" + binaryString.length);
+
+binaryString = window.atob(binaryString);
+
+var restored = pako.ungzip(binaryString, { to: 'string' });//字符串解压缩处理
+
+console.log(restored);
+
+console.log(pako);
+
+
+
+
+
+</script>
+</head>
+<body>
+
+</body>
+</html>

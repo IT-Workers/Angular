@@ -1,0 +1,184 @@
+/* 主界面 */
+.main-panel{
+	width:1000px; height: 700px;margin:0px auto;border-radius:4px;box-shadow: 7px 8px 5px #888888;
+}
+/* 左侧会话好友列表 */
+.left-panel{
+	height: 100%;width: 280px;border-radius:4px 0px 0px 4px;background: #2e3238;float: left;
+}
+.left-panel header{
+	border-bottom: 1px #212121 solid;
+}
+.left-panel-hear{
+	padding: 16px;
+}
+.left-panel-hear img{
+	width: 50px;border-radius:2px;vertical-align: middle;
+}
+.left-panel-hear b{
+	color: #FFFFFF;font-size: 16px;margin-left: 10px;
+}
+/* 搜索框*/
+.left-panel-search{
+	padding: 0px 16px 16px 16px;
+}
+.left-panel-search div{
+	background: #212121; border-radius:2px;
+}
+.left-panel-search img{
+	width: 24px;vertical-align: middle;margin-left: 8px;
+}
+.left-panel-search input{
+	width: 208px; height: 28px;border: none;background: none;outline: none;color: #FFFFFF;
+}
+/* 会话好友导航*/
+.left-panel-nav{
+	height: 44px;border-top: 1px #212121 solid;
+}
+.left-panel-nav ul{
+	padding: 0px; margin: 0px; height: 100%;
+}
+.left-panel-nav li:FIRST-CHILD{
+	border-right: 1px #212121 solid;
+}
+.left-panel-nav li{
+	list-style: none;float: left;width: 49%; height: 30px;text-align: center;margin-top: 7px;cursor: pointer;
+}
+.left-panel-nav li img{
+	margin: 1px; width: 28px;
+}
+/* 会话列表 */
+.conver-list{
+	height: 485px;
+}
+.conver-list ul {
+	padding: 0px; margin: 0px; height: 100%;
+}
+.conver-list li{
+	list-style: none;padding:16px;border-bottom: 1px #212121 solid;cursor: pointer;
+}
+.conver-list li:HOVER{
+	background: #212121;
+}
+.conver-list li .conver-list-friend-icon{
+	width: 48px; vertical-align: top;border-radius:2px;
+}
+.conver-list-content{
+	float: right;color: #FFFFFF; width: 190px;
+}
+.conver-list-content b{
+	font-size: 14px;
+}
+.conver-list-content span{
+	font-size: 11px;white-space: nowrap; display: inline-block;width: 125px;overflow: hidden;text-overflow: ellipsis;
+}
+.conver-list-content time{
+	font-size: 11px; float: right;line-height: 22px
+}
+.conver-list-content i{
+	font-size: 11px; float: right; background: red;width: 30px;height: 18px;border-radius: 10px;text-align: center;margin-top: 3px;
+	position: relative;right: -30px;
+}
+/** 右侧聊天界面 **/
+.righet-panel{
+	width: 719px;height: 698px;margin-left: 280px;border: 1px #D5D5D5 solid;border-left: none; border-radius: 0px 4px 4px 0px;
+}
+/** 右侧聊天头部界面 **/
+.righet-panel header{
+	padding: 8px 16px;
+}
+.righet-panel header .righet-panel-friend-icon{
+	width: 40px; vertical-align: middle; border-radius:2px;border: 1px #eeeeee solid; 
+}
+.righet-panel header b{
+	font-size: 14px;
+}
+/* 聊天消息区域 */
+.righet-panel-content{
+	height: 447px;border-top: 1px #D5D5D5 solid; border-bottom: 1px #D5D5D5 solid;overflow: auto;
+}
+.righet-panel-content ul{
+	padding: 0px; margin: 0px;width: 100%;
+}
+.righet-panel-content ul li{
+	/* list-style: none; */ padding: 8px; display: flow-root;
+}
+
+/** 发送消息**/
+.righet-panel-content-send p{
+	padding: 4px; margin: 0px;text-align: center;font-size: 11px; color: #999;
+}
+.righet-panel-content-send .send-icon{
+	float: right;width: 40px; vertical-align: middle;border: 1px #eeeeee solid;
+}
+.righet-panel-content-send .right-anchor{
+	display: table;border-bottom: 8px solid #FFF;border-top: 8px solid #FFF;border-right: none;border-left: 8px solid #1296db;
+	float: right;margin-right: 6px;margin-top: 12px;
+}
+.righet-panel-content-send section{
+	float: right;background:#1296db;min-height: 24px;border-radius:4px;padding: 8px;max-width: 450px;
+}
+/** 接收消息**/
+.righet-panel-content-receive p{
+	/* float: left; */
+	padding: 4px; margin: 0px;text-align: center;font-size: 11px; color: #999;
+}
+.righet-panel-content-receive .receive-icon{
+	float: left;width: 40px; vertical-align: middle;border: 1px #eeeeee solid;
+}
+.righet-panel-content-receive .left-anchor{
+	float: left; display: table;border-bottom: 8px solid #FFF;border-top: 8px solid #FFF;border-left: none;border-right: 8px solid #bdbdbd; margin-left: 6px;margin-top: 12px;
+}
+.righet-panel-content-receive section{
+	float: left;background:#bdbdbd;min-height: 24px;border-radius:4px;padding: 8px;max-width: 450px;
+}
+/**输入消息部分**/
+.righet-panel-footer{
+	height: 191px;
+}
+.righet-panel-footer header {
+	height: 35px; margin: 0px; padding: 0px; border-bottom: 1px #D5D5D5 solid;
+}
+.righet-panel-footer header ul{
+	padding: 0px; margin: 0px;
+}
+.righet-panel-footer header ul li{
+	list-style: none;float: left;padding: 0px 10px; margin:4px 0px; height:26px; border-right: 1px #D5D5D5 solid;
+}
+.righet-panel-footer header ul li:LAST-CHILD{
+	list-style: none;float: left;padding: 0px 10px; margin:4px 0px; height:26px; border:none;
+}
+.righet-panel-footer header ul li img{
+	width: 26px;border: none; vertical-align: middle;
+}
+
+/** 表情区域**/
+.righet-panel-footer header .face-content{
+	position:relative; top:-226px; left:-90px; background: #FFFFFF;box-shadow:0px 0px 5px 2px #888888;border-radius:1px;
+	width: 360px;height: 220px;overflow: auto;padding: 2px
+}
+.righet-panel-footer header .face-content img{
+	padding: 4px; cursor: pointer;
+}
+.righet-panel-footer header .face-content img:HOVER{
+	background: #dddddd;
+}
+
+/**内容区域**/
+.righet-panel-footer .container{
+	outline: none; height: 85px;width: 700px; overflow: auto; padding: 10px;font-size: 14px;color: #212121;
+}
+/** 发送按钮**/
+.righet-panel-footer footer{
+	height: 50px;line-height: 50px;
+}
+.righet-panel-footer footer div{
+	float: right;margin-right: 16px;
+}
+.righet-panel-footer footer div span{
+	font-size: 14px; color: #888888;margin-right: 4px;
+}
+.righet-panel-footer footer div button{
+	padding: 6px 38px;background: none;border: 1px #888888 solid;border-radius:4px; outline: none;cursor: pointer;
+}
+

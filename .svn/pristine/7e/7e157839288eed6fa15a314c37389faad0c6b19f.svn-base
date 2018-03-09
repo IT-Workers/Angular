@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="resource/css/theme.css">
+	<link rel="stylesheet" href="resource/css/stim.css">
+</head>
+<body ng-app="app" ng-cloak ng-controller="controller">
+
+	<div class="main-panel" style="margin-top: 100px">
+		<div class="left-panel">
+			<header>
+				<section class="left-panel-hear">
+					<img ng-src="{{user.icon}}">
+					<b>{{user.name}}</b>
+				</section>
+				<section class="left-panel-search">
+					<div>
+						<img alt="搜索" src="resource/img/search.png">
+						<input placeholder="请输入搜索内容" type="text">
+					</div>
+				</section>
+				<nav class="left-panel-nav">
+					<ul>
+						<li ng-click="selected(1)">
+							<img alt="会话" src="resource/img/conversation.png" >
+						</li>
+						<li ng-click="selected(2)">
+							<img alt="好友" src="resource/img/friend.png" >
+						</li>
+					</ul>
+				</nav>
+			</header>
+			<section class="conver-list">
+			
+				<ul ng-show="type == 1">
+					<li ng-repeat="conversation in friendConversation" ng-click="seleectdFriend(conversation.friendId)">
+						<img ng-src="{{getFriend(conversation.friendId).icon}}">
+						<div class="conver-list-content">
+							<div>
+								<b>{{getFriend(conversation.friendId).name}}</b>
+								<time>{{conversation.conversation[conversation.conversation.length - 1].sendTime | date:'HH:mm'}}</time>
+							</div>
+							<div>
+								<span>{{conversation.conversation[conversation.conversation.length - 1].body  | messageLength}}</span>
+								<i>{{conversation.conversation.length | messageCount}}</i>
+							</div>
+						</div>
+					</li>
+				</ul>
+				
+				<ul ng-show="type == 2">
+					<li ng-repeat="friend in friends" ng-click="seleectdFriend(friend.clientId)">
+						<img ng-src="{{getFriend(friend.clientId).icon}}">
+						<div class="conver-list-content">
+							{{friend.name}}
+						</div>
+					</li>
+				</ul>
+				
+			</section>
+		</div>
+		<div class="righet-panel">
+			<header>
+				<img ng-src="{{getFriend(friendId).icon}}">
+				<b>{{getFriend(friendId).name}}</b>
+			</header>
+			<div id="content" class="righet-panel-content" ng-hide="friendId == undefined">
+				<ul>
+					<li ng-repeat="message in conversation" ng-class="message.from == user.clientId ? 'righet-panel-content-send' : 'righet-panel-content-receive'">
+						<p>{{message.sendTime | date:'HH:mm'}}</p>
+						<img ng-src="resource/img/user.jpg">
+						<span ng-class="message.from == user.clientId ? 'right-anchor' : 'left-anchor'"></span>
+						<section>
+							<span ng-bind-html="message.body | word"></span>
+						</section>
+					</li>
+					
+					<!-- <li class="righet-panel-content-receive">
+						<p>345354353</p>
+						<img alt="小智" src="resource/img/user.jpg">
+						<span class="left-anchor"></span>
+						<section>
+							<span>
+							你在干嘛？
+							</span>
+						</section>
+					</li>
+					<li class="righet-panel-content-receive">
+						<p>345354353</p>
+						<img alt="小智" src="resource/img/user.jpg">
+						<span class="left-anchor"></span>
+						<section>
+							<span>
+							你在干嘛？
+							</span>
+						</section>
+					</li> -->
+						
+					
+					<!-- <li class="righet-panel-content-send"  ng-repeat="message in conversation">
+						<img alt="小智" src="resource/img/user.jpg">
+						<span class="right-anchor"></span>
+						<section>
+							<span>你在干嘛？</span>
+						</section>
+					</li> -->
+					<!-- <li class="righet-panel-content-send">
+						<img alt="小智" src="resource/img/user.jpg">
+						<span class="right-anchor"></span>
+						<section>
+							<span>
+								你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在
+							</span>
+						</section>
+					</li>
+					<li class="righet-panel-content-receive">
+						<img alt="小智" src="resource/img/user.jpg">
+						<span class="left-anchor"></span>
+						<section>
+							<span>
+							你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在
+							在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在
+							在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在
+							</span>
+						</section>
+					</li>
+					<li class="righet-panel-content-receive">
+						<img alt="小智" src="resource/img/user.jpg">
+						<span class="left-anchor"></span>
+						<section>
+							<span>
+							在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在干嘛？你在
+							</span>
+						</section>
+					</li>
+					<li class="righet-panel-content-send">
+						<img alt="小智" src="resource/img/user.jpg">
+						<span class="right-anchor"></span>
+						<section>
+							<span>你在干嘛？</span>
+						</section>
+					</li> -->
+				</ul>
+			</div>
+			<footer class="righet-panel-footer" ng-hide="friendId == undefined">
+				<header>
+					<ul>
+						<li>
+							<img alt="表情" src="resource/img/msg-smile.png">
+						</li>
+						<li>
+							<img alt="图片" src="resource/img/msg-file.png">
+						</li>
+					</ul>
+				</header>
+				<div>
+					<textarea ng-model="messageModel" ng-keydown="editMessage($event, friendId)"></textarea>
+				</div>
+				<footer>
+					<div>
+						<span>按下Ctrl+Enter发送</span>
+						<button ng-click="sendMessage(friendId)">发送</button>
+					</div>
+				</footer>
+			</footer>
+		</div>
+	</div>
+	
+	<script src="resource/js/angular/angular.min.js"></script>
+	<script src="resource/js/angular/angular-sanitize.min.js"></script>
+	<script src="resource/js/pako.min.js" type="text/javascript"></script>
+	<script src="resource/js/jsencrypt.min.js" type="text/javascript"></script>
+	<script src="resource/js/stim.js"></script>
+	
+	<script src="app.js"></script>
+</body>
+</html>
